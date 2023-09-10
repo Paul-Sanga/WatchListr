@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { env } from "src/app/environment/environment";
 
 @Injectable({
     providedIn: "root"
 })
 export class AnimeDbService {
-    private readonly API_KEY: string = "2254de9a0amsh736177c36efdcfdp104251jsn7005775bb33b";
+    private readonly API_KEY: string = env.RapidAPIKey;
     private readonly HOST: string = "anime-db.p.rapidapi.com";
     private readonly BASE_URL: string = "https://anime-db.p.rapidapi.com/anime";
 

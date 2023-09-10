@@ -159,7 +159,7 @@
                             {{result.title}}
                         </h3>
                         <p class="preview-summary">
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio, id.
+                            {{(result.synopsis.length > 10) ? (result.synopsis | slice:0:70)+"...":(result.synopsis)}}
                         </p>
                     </div>
                 </div>

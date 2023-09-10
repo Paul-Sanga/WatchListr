@@ -366,7 +366,7 @@
     align-items: flex-start;
     justify-content: space-evenly;
     gap: 2rem;
-    border-left: 4px solid var(--silver-level-3);
+    border-left: 4px solid var(--raspberry);
 }
 
 .preview-img {
