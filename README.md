@@ -4,6 +4,8 @@
 
 ![](https://github.com/WatchListr/WatchListr/blob/master/previews/user_catalog.png)
 
+![](https://github.com/WatchListr/WatchListr/blob/master/previews/add_catalog.png?raw=true)
+
 ![](https://github.com/WatchListr/WatchListr/blob/master/previews/preview_catalog.png)
 
 
