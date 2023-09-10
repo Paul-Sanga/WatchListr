@@ -1,0 +1,167 @@
+<div class="home">
+    <!-- SIDE BAR -->
+    <section class="side-bar">
+        <!-- LOGO -->
+        <img class="side-bar-logo" src="../../../assets/logos/web/png/logo_icon_no_bg.png" alt="logo">
+
+        <!-- SIDE BAR LINKS -->
+        <ul class="side-bar-links">
+            <li class="side-bar-link-item">
+                <a class="side-bar-link">
+                    <fa-icon [icon]="Home"></fa-icon>
+                    Home
+                </a>
+            </li>
+
+            <li class="side-bar-link-item active">
+                <a class="side-bar-link">
+                    <fa-icon [icon]="Shows"></fa-icon>
+                    Your Shows
+                </a>
+            </li>
+
+            <li class="side-bar-link-item">
+                <a class="side-bar-link">
+                    <fa-icon [icon]="Settings"></fa-icon>
+                    Settings
+                </a>
+            </li>
+
+            <li class="side-bar-link-item">
+                <a class="side-bar-link" [routerLink]="['add-show']">
+                    <fa-icon [icon]="Add"></fa-icon>
+                    Add Show
+                </a>
+            </li>
+        </ul>
+
+        <!-- MORE INFO -->
+        <div class="more-info">
+            <a class="more-info-toggle">
+                <fa-icon [icon]="More"></fa-icon>
+            </a>
+        </div>
+    </section>
+
+    <!-- MAIN NAVIGATION -->
+    <nav class="navigation">
+        <ul class="nav-links">
+            <li class="link-item">
+                <a class="link active">
+                    Your Shows
+                </a>
+            </li>
+
+            <li class="link-item">
+                <a class="link">
+                    Completed
+                </a>
+            </li>
+
+            <li class="link-item">
+                <a class="link">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT | Home -->
+    <section class="hero">
+        <div class="hero-content-wrapper">
+            <!-- HERO INFO -->
+            <div class="hero-info">
+                <h4 class="current-page-title">
+                    Your shows
+                </h4>
+
+                <h2 class="info-title">
+                    Add More Shows
+                </h2>
+
+                <p class="info-content">
+                    With our user-friendly interface and powerful features, managing your favorite shows has never been
+                    easier. Track, organize, and stay up-to-date with all your TV series effortlessly. Set personalized
+                    reminders, discover new episodes, and even receive recommendations based on your viewing history.
+                </p>
+
+                <button class="hero-cta">
+                    Contact
+                </button>
+            </div>
+
+            <!-- WRAPPER -->
+            <div class="genre-content-wrapper">
+                <!-- GENRES -->
+                <div class="genres">
+                    <div class="genre action">
+                        <p class="genre-info">
+                            Action
+                        </p>
+                    </div>
+
+                    <div class="genre drama">
+                        <p class="genre-info">
+                            Drama
+
+                        </p>
+                    </div>
+
+                    <div class="genre adventure">
+                        <p class="genre-info">
+                            Adventure
+                        </p>
+                    </div>
+
+                    <div class="genre sci-fi">
+                        <p class="genre-info">
+                            Sci-Fi
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SOCIAL MEDIA ICONS -->
+                <div class="social-media-icons">
+                    <a class="social-media-icon active">
+                        <fa-icon [icon]="Instagram"></fa-icon>
+                    </a>
+
+                    <a class="social-media-icon">
+                        <fa-icon [icon]="Facebook"></fa-icon>
+                    </a>
+
+                    <a class="social-media-icon">
+                        <fa-icon [icon]="Linkedin"></fa-icon>
+                    </a>
+
+                    <a class="social-media-icon">
+                        <fa-icon [icon]="XTwitter"></fa-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- STREAMING PLATFORMS -->
+        <section class="streaming-platforms">
+            <h4 class="streaming-platforms-title">
+                Streaming Platforms
+            </h4>
+
+            <!-- PLATFORMS -->
+            <div class="platforms">
+                <img src="../../../assets/platforms/netflix.png" alt="netflix" class="platform">
+
+                <img src="../../../assets/platforms/disney+.png" alt="disney+" class="platform">
+
+                <img src="../../../assets/platforms/crunchyroll.png" alt="crunchyroll" class="platform">
+
+                <img src="../../../assets/platforms/funimation.png" alt="funimation" class="platform">
+
+                <img src="../../../assets/platforms/hulu.png" alt="hulu" class="platform">
+
+                <img src="../../../assets/platforms/wit.png" alt="hulu" class="platform"> 
+            </div>
+        </section>
+    </section>
+</div>

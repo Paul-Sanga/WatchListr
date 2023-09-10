@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+}
+
+:root {
+    /* COLOR PALETTE */
+    --night-level-1: #0b0b0bee;
+    --night-level-2: #141012ff;
+    --night-level-3: #111011ff;
+    --night-level-4: rgba(17, 16, 17, 0.6);
+    --night-level-5: rgba(17, 16, 17, 0.96);
+    --night-level-6: rgba(17, 16, 17, 0.464);
+    --silver-level-1: #A8A8A8ff;
+    --silver-level-2: #ffffff30;
+    --silver-level-3: #ffffff6e;
+    --white-level-1: #FFFFFFff;
+    --white-level-2: rgb(207, 207, 207);
+    --davys-gray: #5E5E5Eff;
+    --gray: #838383ff;
+    --dark-purple: #2B0E1Aff;
+    --raspberry: #DF015Fff;
+
+    /* SHADOWS */
+    --shadow-level-1: 0 1rem 1rem 0 rgba(0, 0, 0, .1);
+    --shadow-level-2: 0 2rem 2rem 0 rgba(0, 0, 0, .2);
+    --shadow-level-3: 0 3rem 3rem 0 rgba(0, 0, 0, .3);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--night-level-5);
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background: var(--raspberry);
+}
+
+body {
+    background: var(--night-level-1);
+    color: var(--white-level-2);
+}
