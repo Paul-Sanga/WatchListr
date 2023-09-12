@@ -42,12 +42,4 @@ async fn main() {
         .unwrap();
 }
 
-async fn health_checker_handler() -> impl IntoResponse {
-    const MESSAGE: &str = "Rust | Axum API | MySQL";
-    // DEFINE A STRUCT FOR RESPONSE MESSAGE
-    let json_response = serde_json::json!({
-        "status": "success",
-        "message": MESSAGE
-    });
-    Json(json_response)
-}
+
