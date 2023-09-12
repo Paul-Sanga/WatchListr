@@ -156,13 +156,13 @@ pub async fn get_show_handler(
 
 // UPDATE SHOW | Route Function, fn
 pub async fn edit_show_handler(
-    Path(id): Path<uuid: Uuid>,
+    Path(id): Path<uuid::Uuid>,
     State(data): State<Arc<AppState>>,
     Json(body): Json<UpdateShowSchema>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let query_result = sqlx::query_as!(
         ShowModel,
-        r#"SELECT * FROM shows WHER id = ?"#,
+        r#"SELECT * FROM shows WHERE id = ?"#,
         id.to_string()
     )
     .fetch_one(&data.db)
@@ -231,7 +231,7 @@ pub async fn edit_show_handler(
     .map_err(|e| {
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(json!({"status": "error", "message": format!("{:?", e)})),
+            Json(json!({"status": "error", "message": format!("{:?}", e)})),
         )
     })?;
 
@@ -253,7 +253,7 @@ pub async fn delete_show_handler(
         .map_err(|e| {
             (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                Json(json!({"status": "error", "message": format!("{:?", e)})),
+                Json(json!({"status": "error", "message": format!("{:?}", e)})),
             )
         })?;
 
