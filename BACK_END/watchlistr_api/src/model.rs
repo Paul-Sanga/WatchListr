@@ -22,6 +22,6 @@ pub struct ShowModelResponse {
     pub content: String,
     pub category: String,
     pub published: bool,
-    pub created_at: chrono::DateTime<chrono::Utc>,
-    pub updated_at: chrono::DateTime<chrono::Utc>,
+    pub createdAt: chrono::DateTime<chrono::Utc>,
+    pub updatedAt: chrono::DateTime<chrono::Utc>,
 }
