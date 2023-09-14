@@ -1,0 +1,91 @@
+{
+    "db": "PostgreSQL",
+    "50b1eb2a9011ecd45c236cad30d6f70156e221e8520993e698e37725dc58d131": {
+        "query": "SELECT * FROM shows",
+        "describe": {
+            "columns": [
+                {
+                    "ordinal": 0,
+                    "name": "id",
+                    "type_info": "Int4"
+                },
+                {
+                    "ordinal": 1,
+                    "name": "name",
+                    "type_info": "Varchar"
+                },
+                {
+                    "ordinal": 2,
+                    "name": "description",
+                    "type_info": "Varchar"
+                },
+                {
+                    "ordinal": 3,
+                    "name": "poster_url",
+                    "type_info": "Varchar"
+                }
+            ],
+            "parameters": {
+                "Left": []
+            },
+            "nullable": [
+                false,
+                false,
+                false,
+                false
+            ]
+        }
+    },
+    "130d74e5d07b56c93249a054993840c1b40a6d2fff8a7b30b407829fea4598e7": {
+        "query": "DELETE FROM shows WHERE id = $1",
+        "describe": {
+            "columns": [],
+            "parameters": {
+                "Left": [
+                    "Int4"
+                ]
+            },
+            "nullable": []
+        }
+    },
+    "7cde2e51c855d03f9e9beb046e1f7fa94f0b6319cd5357b7ae8746b5ff8f08a1": {
+        "query": "INSERT INTO shows (name, description, poster_url) VALUES ($1, $2, $3) RETURNING id, name, description, poster_url",
+        "describe": {
+            "columns": [
+                {
+                    "ordinal": 0,
+                    "name": "id",
+                    "type_info": "Int4"
+                },
+                {
+                    "ordinal": 1,
+                    "name": "name",
+                    "type_info": "Varchar"
+                },
+                {
+                    "ordinal": 2,
+                    "name": "description",
+                    "type_info": "Varchar"
+                },
+                {
+                    "ordinal": 3,
+                    "name": "poster_url",
+                    "type_info": "Varchar"
+                }
+            ],
+            "parameters": {
+                "Left": [
+                    "Varchar",
+                    "Varchar",
+                    "Varchar"
+                ]
+            },
+            "nullable": [
+                false,
+                false,
+                false,
+                false
+            ]
+        }
+    }
+}

@@ -1,57 +1,124 @@
-mod handler;
-mod model;
-mod route;
-mod schema;
-
-use std::sync::Arc;
-
-use axum::http::{
-    header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
-    HeaderValue, Method,
+use axum::{
+    extract::{self, Path},
+    http::StatusCode,
+    routing::{delete, get, post},
+    Extension, Json, Router,
 };
-use dotenv::dotenv;
-use route::create_router;
-use tower_http::cors::CorsLayer;
 
-use sqlx::mysql::{MySqlPool, MySqlPoolOptions};
+use dotenvy::dotenv;
 
-pub struct AppState {
-    db: MySqlPool,
-}
+use serde::{Deserialize, Serialize};
+use sqlx::postgres::PgPoolOptions;
+use sqlx::{Pool, Postgres};
 
 #[tokio::main]
-async fn main() {
-    // LOAD ENVIRONMENT VARIABLES
+async fn main() -> anyhow::Result<()> {
     dotenv().ok();
 
-    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set.");
 
-    let pool = match MySqlPoolOptions::new()
-        .max_connections(10)
-        .connect(&database_url)
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&url)
         .await
-    {
-        Ok(pool) => {
-            println!("Connected to database");
-            pool
-        }
-        Err(err) => {
-            println!("Failed to establish connection: {:?}", err);
-            std::process::exit(1);
-        }
-    };
+        .unwrap_or_else(|_| panic!("Failed to create Connection Pool! URL: {}", url));
 
-    let cors = CorsLayer::new()
-        .allow_origin("http://localhost:8000".parse::<HeaderValue>().unwrap())
-        .allow_methods([Method::GET, Method::POST, Method::PATCH, Method::DELETE])
-        .allow_credentials(true)
-        .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
+    sqlx::migrate!("./migrations").run(&pool).await?;
 
-    let app = create_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
+    let addr: std::net::SocketAddr = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
 
-    println!("Server is listening...");
-    axum::Server::bind(&"0.0.0.0:8000".parse().unwrap())
-        .serve(app.into_make_service())
+    // Validate that server is running
+    println!("\nServer is listening on {}", addr);
+
+    // Setup HTTP Server
+    axum::Server::bind(&addr)
+        .serve(app().layer(Extension(pool)).into_make_service())
         .await
         .unwrap();
+
+    Ok(())
+}
+
+// Show Model
+#[derive(Serialize, Deserialize)]
+pub struct Show {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub id: Option<i32>,
+    pub name: String,
+    pub description: String,
+    pub poster_url: String,
+}
+
+// Route configuration
+#[allow(dead_code)]
+fn app() -> Router {
+    Router::new()
+        .route("/", get(handler))
+        .route("/show", post(add_show))
+        .route("/shows", get(get_shows))
+        .route("/show/:id", delete(delete_show))
+}
+
+// Health checker
+async fn handler() -> &'static str {
+    "Connection established!"
+}
+
+// Get shows
+async fn get_shows(state: Extension<Pool<Postgres>>) -> Json<Vec<Show>> {
+    let Extension(pool) = state;
+
+    let records = sqlx::query!("SELECT * FROM shows")
+        .fetch_all(&pool)
+        .await
+        .expect("Failed to get shows...");
+
+    let records = records
+        .iter()
+        .map(|r| Show {
+            id: Some(r.id),
+            name: r.name.to_string(),
+            description: r.description.to_string(),
+            poster_url: r.poster_url.to_string(),
+        })
+        .collect();
+
+    Json(records)
+}
+
+// Add show | handler
+pub async fn add_show(
+    state: Extension<Pool<Postgres>>,
+    extract::Json(show): extract::Json<Show>,
+) -> Json<Show> {
+    let Extension(pool) = state;
+
+    let row = sqlx::query!(
+        "INSERT INTO shows (name, description, poster_url) VALUES ($1, $2, $3) RETURNING id, name, description, poster_url",
+        show.name,
+        show.description,
+        show.poster_url,
+    )
+    .fetch_one(&pool)
+    .await
+    .expect("Failed to add show...");
+
+    Json(Show {
+        id: Some(row.id),
+        name: row.name,
+        description: row.description,
+        poster_url: row.poster_url,
+    })
+}
+
+// Delet show | handler
+pub async fn delete_show(state: Extension<Pool<Postgres>>, Path(show_id): Path<i32>) -> StatusCode {
+    let Extension(pool) = state;
+
+    sqlx::query!("DELETE FROM shows WHERE id = $1", show_id)
+        .execute(&pool)
+        .await
+        .expect("Failed to delete show...");
+
+    StatusCode::NO_CONTENT
 }
