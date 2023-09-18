@@ -111,7 +111,7 @@ pub async fn add_show(
     })
 }
 
-// Delet show | handler
+// Delete show | handler
 pub async fn delete_show(state: Extension<Pool<Postgres>>, Path(show_id): Path<i32>) -> StatusCode {
     let Extension(pool) = state;
 

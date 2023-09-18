@@ -5,7 +5,7 @@ services:
   api:
     image: irfanghat/watchlistr_api
     environment:
-      DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@db:5432"
+      DATABASE_URL: "postgres://watchlistrdb_user:${POSTGRES_PASSWORD}@dpg-ck43mij6fquc73b0lipg-a.oregon-postgres.render.com/watchlistrdb"
     build:
     # Specify Dockerfile to used for
       context: .
