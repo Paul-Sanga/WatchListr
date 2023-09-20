@@ -6,7 +6,10 @@ import {
     faHome,
     faGear,
     faPlusCircle,
-    faWindowRestore
+    faWindowRestore,
+    faSpinner,
+    faVideoCamera,
+    faThumbTack
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faInstagram,
@@ -23,6 +26,7 @@ import {
     Validators
 } from "@angular/forms";
 import { AnimeDbService } from "src/app/services/anime-db/anime-db.service";
+import { ShowService } from "src/app/services/shows/show.service";
 
 @Component({
     selector: "add-show",
@@ -38,6 +42,9 @@ export class AddShowComponent implements OnInit {
     Settings = faGear;
     Add = faPlusCircle;
     More = faWindowRestore;
+    Spinner = faSpinner;
+    Camera = faVideoCamera;
+    ThumbTack = faThumbTack;
     // SOCIAL MEDIA
     Instagram = faInstagram;
     Facebook = faFacebookF;
@@ -46,6 +53,7 @@ export class AddShowComponent implements OnInit {
 
     ADD_SHOW!: FormGroup;
     SEARCH_RESULTS: any[] = [];
+    NEW_SHOWS: any[] = [];
 
     /**
     * 
@@ -58,7 +66,9 @@ export class AddShowComponent implements OnInit {
     // IJ=NJECT SERVICES
     constructor(
         private formBuilder: FormBuilder,
-        private animeDb: AnimeDbService) { }
+        private animeDb: AnimeDbService,
+        private showService: ShowService
+    ) { }
 
     /**
      * 
@@ -70,8 +80,13 @@ export class AddShowComponent implements OnInit {
             show_name: ["", Validators.required],
             additional_info: ["", Validators.required],
         });
+
+        this.animeDb.req_GET_NEW_SHOWS().subscribe(newShows => {
+            this.NEW_SHOWS = newShows.data;
+        });
     }
 
+    // GET DETAILS FOR RECOMMENDED SHOWS
     req_GET_SHOW_DETAILS() {
         let SEARCH_QUERY: string = this.showName.nativeElement.value
         this.animeDb.req_GET_SHOW(SEARCH_QUERY);
@@ -84,4 +99,8 @@ export class AddShowComponent implements OnInit {
             }
         );
     }
+
+    // req_ADD_SHOW() {
+
+    // }
 }

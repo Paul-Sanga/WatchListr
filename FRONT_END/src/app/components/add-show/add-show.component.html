@@ -84,7 +84,7 @@
                 </h2>
 
                 <p class="info-content">
-                    Say goodbye to the hassle of juggling multiple streaming services and episodes - our platform
+                    Say goodbye to the hassle of juggling multiple streaming services and episodes our platform
                     centralizes everything in one place.
                 </p>
             </div>
@@ -112,7 +112,7 @@
                     </div>
 
                     <!-- SUBMIT BUTTON -->
-                    <button class="form-cta" (click)="req_GET_SHOW_DETAILS()">
+                    <button class="form-cta" (click)="req_GET_SHOW_DETAILS()" title="Add to view similar shows...">
                         Add Show
                     </button>
                 </form>
@@ -140,7 +140,7 @@
 
 
         <!-- TITLE -->
-        <h2 class="recommendations" *ngIf="SEARCH_RESULTS.length > 0">
+        <h2 class="recommendations">
             <span>
                 Recommended
             </span>
@@ -148,22 +148,66 @@
         </h2>
 
         <!-- PREVIEW CONTAINER -->
-        <section class="preview-wrapper" *ngIf="SEARCH_RESULTS.length > 0">
-            <!-- PREVIEW -->
-            <div class="preview" *ngFor="let result of SEARCH_RESULTS">
-                <div class="preview-content">
-                    <img src={{result.image}} alt="" class="preview-img">
-                    <!-- PREVIEW INFO -->
-                    <div class="preview-info">
-                        <h3 class="preview-title">
-                            {{result.title}}
-                        </h3>
-                        <p class="preview-summary">
-                            {{(result.synopsis.length > 10) ? (result.synopsis | slice:0:70)+"...":(result.synopsis)}}
-                        </p>
+        <div class="show-section">
+            <section class="preview-wrapper">
+
+                <!-- DEFAULT MESSAGE -->
+                <h2 class="default-message" *ngIf="SEARCH_RESULTS.length == 0">
+                    <fa-icon [icon]="Camera" class="spinner"></fa-icon>
+                    Add a Show to view more
+                    <p>
+                        <span>
+                            similar shows
+                        </span>
+                    </p>
+                </h2>
+
+                <!-- PREVIEW -->
+                <div class="preview" *ngFor="let result of SEARCH_RESULTS">
+                    <div class="preview-content">
+                        <img src={{result.image}} alt="poster" class="preview-img">
+                        <!-- PREVIEW INFO -->
+                        <div class="preview-info">
+                            <h3 class="preview-title">
+                                {{result.title}}
+                            </h3>
+                            <p class="preview-summary">
+                                {{(result.synopsis.length > 10) ? (result.synopsis |
+                                slice:0:70)+"...":(result.synopsis)}}
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- NEW SHOWS -->
+            <section class="new-shows">
+                <h2 class="new-show-section-title">
+                    <div class="thumbtack">
+                        <fa-icon [icon]="ThumbTack"></fa-icon>
+                    </div>
+                    New
+                </h2>
+
+                <!-- CONTENT -->
+                <div class="new-show-content">
+                    <!-- SHOW CONTENT -->
+                    <div class="show-content" *ngFor="let show of NEW_SHOWS">
+                        <img src={{show.image}} alt="poster" class="new-show-img">
+                        <!-- SHOW INFO -->
+                        <div class="show-info">
+                            <h3 class="show-title">
+                                {{show.title}}
+                            </h3>
+                            <p class="show-summary">
+                                {{(show.synopsis.length > 10) ? (show.synopsis |
+                                slice:0:70)+"...":(show.synopsis)}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
     </section>
 </div>

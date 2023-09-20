@@ -17,9 +17,9 @@
     --night-level-4: rgba(17, 16, 17, 0.6);
     --night-level-5: rgba(17, 16, 17, 0.96);
     --night-level-6: rgba(17, 16, 17, 0.464);
-    --silver-level-1: #A8A8A8ff;
+    --silver-level-1: rgb(152, 152, 152);
     --silver-level-2: #ffffff30;
-    --silver-level-3: #ffffff6e;
+    --silver-level-3: #ffffffa8;
     --white-level-1: #FFFFFFff;
     --white-level-2: rgb(207, 207, 207);
     --davys-gray: #5E5E5Eff;
