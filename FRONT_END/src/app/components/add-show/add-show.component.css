@@ -491,13 +491,13 @@
     border-radius: 5px;
     box-shadow: var(--shadow-level-3);
     transform: rotate(-10deg);
-    width: 120px;
+    width: 110px;
     padding: 1rem;
+    font-size: 1.3rem;
     margin-bottom: 2rem;
     cursor: default;
-    opacity: .9;
     transition: .4s all ease;
-    animation: glow 3s;
+    opacity: .9;
 }
 
 .new-show-section-title:hover {
