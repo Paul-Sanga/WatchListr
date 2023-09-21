@@ -12,7 +12,7 @@ import { env } from "src/app/environment/environment";
  * 
  */
 export class AnimeDbService {
-    private readonly API_KEY: string = env.RapidAPIKey;
+    private readonly API_KEY: string = env.RapidAPIKey.trim();
     private readonly HOST: string = "anime-db.p.rapidapi.com";
     private readonly BASE_URL: string = "https://anime-db.p.rapidapi.com/anime";
 
