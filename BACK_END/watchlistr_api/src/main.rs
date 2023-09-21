@@ -1,18 +1,23 @@
 use axum::{
     extract::{self, Path},
-    http::{StatusCode, self},
+    http::StatusCode,
     routing::{delete, get, post},
     Extension, Json, Router,
 };
 
 use dotenvy::dotenv;
+use hyper::Method;
 
 use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::{Pool, Postgres};
 
-use tower_http::cors::{Any, CorsLayer};
+use axum::http::{
+    header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE}
+};
 
+
+use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -35,8 +40,9 @@ async fn main() -> anyhow::Result<()> {
 
     // Create a CORS layer
     let cors = CorsLayer::new()
-        .allow_methods([http::Method::GET, http::Method::POST, http::Method::DELETE])
-        .allow_origin(Any);
+        .allow_methods([Method::GET, Method::POST])
+        .allow_origin(Any)
+        .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
 
     // Setup HTTP Server
     axum::Server::bind(&addr)
@@ -60,11 +66,17 @@ pub struct Show {
 // Route configuration
 #[allow(dead_code)]
 fn app() -> Router {
+    let cors = CorsLayer::new()
+        .allow_methods([Method::GET, Method::POST])
+        .allow_origin(Any)
+        .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
+
     Router::new()
         .route("/", get(handler))
         .route("/show", post(add_show))
         .route("/shows", get(get_shows))
         .route("/show/:id", delete(delete_show))
+        .layer(cors)
 }
 
 // Health checker
@@ -107,9 +119,9 @@ pub async fn add_show(
         show.description,
         show.poster_url,
     )
-    .fetch_one(&pool)
-    .await
-    .expect("Failed to add show...");
+        .fetch_one(&pool)
+        .await
+        .expect("Failed to add show...");
 
     Json(Show {
         id: Some(row.id),

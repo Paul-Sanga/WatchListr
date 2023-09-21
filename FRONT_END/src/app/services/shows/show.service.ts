@@ -13,7 +13,7 @@ export class ShowService {
      */
 
     // BASE URL
-    private BASE_URL = env.WatchListrAPIurl;
+    private BASE_URL = env.WatchListrAPIurl.trim();
 
     constructor(private http: HttpClient) { }
 
