@@ -12,20 +12,20 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    depends_on:
-      - db
+#    depends_on:
+#      - db
 
   # Configure database service
-  db:
-    image: postgres:15.2-alpine
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - db:/var/lib/postgresql/data
-    
-volumes:
-  db:
-    driver: local
+#  db:
+#    image: postgres:15.2-alpine
+#    restart: always
+#    environment:
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - db:/var/lib/postgresql/data
+#
+#volumes:
+#  db:
+#    driver: local
