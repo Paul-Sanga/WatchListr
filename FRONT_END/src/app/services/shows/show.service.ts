@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { env } from "src/app/environment/environment";
-import { ShowModel } from "src/app/models/show";
+import { AddShowModel, ShowModel } from "src/app/models/show";
 
 @Injectable({
     providedIn: "root"
@@ -23,12 +23,12 @@ export class ShowService {
     }
 
     // Add show
-    addShow(payload: ShowModel): Observable<ShowModel> {
+    addShow(payload: AddShowModel): Observable<AddShowModel> {
 
         const headers = new HttpHeaders({
             "Content-Type": "application/json"
         });
 
-        return this.http.post<ShowModel>(this.BASE_URL + "/show", payload, { headers });
+        return this.http.post<AddShowModel>(this.BASE_URL + "/show", payload, { headers });
     }
 }

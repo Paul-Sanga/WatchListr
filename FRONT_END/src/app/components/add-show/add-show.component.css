@@ -350,6 +350,8 @@
     text-align: right;
     opacity: .8;
     background: linear-gradient(180deg, rgba(223, 1, 93, .9) 0%, rgba(223, 1, 93, 0.4) 45%, rgba(0, 0, 0, 0.1) 100%);
+    background-blend-mode: screen;
+
     transition: .3s all ease;
     cursor: default;
     position: relative;

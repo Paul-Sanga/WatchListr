@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "c515cfa1-435a-42d6-8d80-4847a1fa112e",
+		"name": "WatchListrAPI",
+		"description": "This API enables users to effortlessly add their favorite TV shows, along with relevant metadata, directly into the database.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14785548"
+	},
+	"item": [
+		{
+			"name": "Get Shows",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Add Show",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// pm.globals.set(\"expectedResult\", ({\r",
+							"//     \"id\": 9,\r",
+							"//     \"name\": \"Kokoro Connect\",\r",
+							"//     \"description\": \"Drama, sci-fi, slice of life anime\",\r",
+							"//     \"poster_url\": \"https://th.bing.com/th/id/R.c00ae07190f21ddd5cbb81c7c9a41b56?rik=y36UX5XLr%2fGVPA&riu=http%3a%2f%2feskipaper.com%2fimages%2fkokoro-connect-wallpaper-2.jpg&ehk=yRu4ahbIcj0MEls75N6c2Si%2bfOB4iwIXNINhzolSnWQ%3d&risl=&pid=ImgRaw&r=0\"\r",
+							"// })); "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"// pm.test(\"Response Body Structure is valid\", () => {\r",
+							"//     pm.expect(response).to.eql(pm.globals.get(\"expectedResult\"));\r",
+							"// });\r",
+							"\r",
+							"var requestBody = request.data;\r",
+							"requestBody = JSON.parse(requestBody);\r",
+							"\r",
+							"pm.test(\"Response Body is valid\", () => {\r",
+							"    pm.expect(response.name).to.eql(requestBody.name);\r",
+							"    pm.expect(response.description).to.eql(requestBody.description);\r",
+							"    pm.expect(response.poster_url).to.eql(requestBody.poster_url);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Violet Evergarden Movie 3\",\r\n    \"description\": \"Drama, sci-fi, slice of life anime\",\r\n    \"poster_url\": \"https://th.bing.com/th/id/R.c00ae07190f21ddd5cbb81c7c9a41b56?rik=y36UX5XLr%2fGVPA&riu=http%3a%2f%2feskipaper.com%2fimages%2fkokoro-connect-wallpaper-2.jpg&ehk=yRu4ahbIcj0MEls75N6c2Si%2bfOB4iwIXNINhzolSnWQ%3d&risl=&pid=ImgRaw&r=0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://watchlistr-api.onrender.com/show",
+					"protocol": "https",
+					"host": [
+						"watchlistr-api",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"show"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Show",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://watchlistr-api.onrender.com/show/1",
+					"protocol": "https",
+					"host": [
+						"watchlistr-api",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"show",
+						"1"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

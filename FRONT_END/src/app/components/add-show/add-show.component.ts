@@ -27,6 +27,7 @@ import {
 } from "@angular/forms";
 import { AnimeDbService } from "src/app/services/anime-db/anime-db.service";
 import { ShowService } from "src/app/services/shows/show.service";
+import { AddShowModel } from "src/app/models/show";
 
 @Component({
     selector: "add-show",
@@ -54,6 +55,7 @@ export class AddShowComponent implements OnInit {
     ADD_SHOW!: FormGroup;
     SEARCH_RESULTS: any[] = [];
     NEW_SHOWS: any[] = [];
+    public POSTER_URL!: string;
 
     /**
     * 
@@ -77,8 +79,8 @@ export class AddShowComponent implements OnInit {
      */
     ngOnInit() {
         this.ADD_SHOW = this.formBuilder.group({
-            show_name: ["", Validators.required],
-            additional_info: ["", Validators.required],
+            name: ["", Validators.required],
+            description: ["", Validators.required],
         });
 
         this.animeDb.req_GET_NEW_SHOWS().subscribe(newShows => {
@@ -87,12 +89,15 @@ export class AddShowComponent implements OnInit {
     }
 
     // GET DETAILS FOR RECOMMENDED SHOWS
-    req_GET_SHOW_DETAILS() {
+    req_RECOMMEND_SHOWS() {
         let SEARCH_QUERY: string = this.showName.nativeElement.value
         this.animeDb.req_GET_SHOW(SEARCH_QUERY);
 
         this.animeDb.req_GET_SHOW(SEARCH_QUERY).subscribe((response) => {
             this.SEARCH_RESULTS = response.data;
+            // POSTER URL TO RETRIEVED POSTER URL
+            this.POSTER_URL = this.SEARCH_RESULTS[0].image;
+            this.req_ADD_SHOW();
         },
             (error) => {
                 console.error(error);
@@ -100,7 +105,26 @@ export class AddShowComponent implements OnInit {
         );
     }
 
-    // req_ADD_SHOW() {
+    // ADD SHOW
+    req_ADD_SHOW() {
+        if (this.ADD_SHOW.valid) {
+            const newShow = {
+                name: this.ADD_SHOW.value.name,
+                description: this.ADD_SHOW.value.description,
+                poster_url: this.POSTER_URL
+            };
 
-    // }
+            this.showService.addShow(newShow).subscribe(response => {
+                console.log(response);
+            },
+                (error: any) => {
+                    console.error(error.message);
+                });
+        }
+    }
+
+    // SUBMIT FORM
+    SUBMIT_FORM() {
+        this.req_RECOMMEND_SHOWS();
+    }
 }

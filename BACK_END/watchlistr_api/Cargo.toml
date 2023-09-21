@@ -13,6 +13,7 @@ hyper = { version = "*", features = ["full"] }
 serde = { version = "*", features = ["derive"] }
 sqlx = { version = "*", features = ["runtime-tokio-rustls", "postgres", "offline"] }
 tokio = { version = "*", features = ["macros"] }
+tower-http = {version= "*", features = ["cors"]}
 
 [dev-dependencies]
 tower = { version = "*", features = ["util"] }

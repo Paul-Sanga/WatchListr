@@ -1,6 +1,6 @@
 use axum::{
     extract::{self, Path},
-    http::StatusCode,
+    http::{StatusCode, self},
     routing::{delete, get, post},
     Extension, Json, Router,
 };
@@ -10,6 +10,9 @@ use dotenvy::dotenv;
 use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::{Pool, Postgres};
+
+use tower_http::cors::{Any, CorsLayer};
+
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -30,9 +33,14 @@ async fn main() -> anyhow::Result<()> {
     // Validate that server is running
     println!("\nServer is listening on {}", addr);
 
+    // Create a CORS layer
+    let cors = CorsLayer::new()
+        .allow_methods([http::Method::GET, http::Method::POST, http::Method::DELETE])
+        .allow_origin(Any);
+
     // Setup HTTP Server
     axum::Server::bind(&addr)
-        .serve(app().layer(Extension(pool)).into_make_service())
+        .serve(app().layer(Extension(pool)).layer(cors).into_make_service())
         .await
         .unwrap();
 
